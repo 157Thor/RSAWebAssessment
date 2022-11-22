@@ -22,14 +22,6 @@ def checkNumbers(cards):
     nums = []
     for card in cards:
         nums.append(card.number)
-    nums.sort()
-    straight = True
-    for i in range(1, len(nums)):
-        if nums[i] != nums[i-1] + 1:
-            straight = False
-            break
-    if straight:
-        return "Straight"
     nums = dict(Counter(nums).items())
     pairs = 0
     threes = 0
@@ -52,6 +44,27 @@ def checkNumbers(cards):
         return
 
 
+def checkFlush(cards):
+    suit = cards[0].suit
+    for card in cards:
+        if card.suit != suit:
+            return False
+    return True
+
+
+def checkStraight(cards):
+    nums = []
+    for card in cards:
+        nums.append(card.number)
+    nums.sort()
+    straight = True
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i-1] + 1:
+            straight = False
+            break
+    return straight
+
+
 def main():
     example_hand = "AS, 10C, 10H, 3D, 3S"
     hand = example_hand.split(", ")
@@ -60,6 +73,12 @@ def main():
         cards.append(Card(card))
     for card in cards:
         print("{} of {}".format(card.number, card.suit))
+    flush = checkFlush(cards)
+    if flush:
+        print("Flush")
+    straight = checkStraight(cards)
+    if straight:
+        print("Straight")
     nums = checkNumbers(cards)
     if nums:
         print(nums)
