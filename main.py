@@ -22,6 +22,14 @@ def checkNumbers(cards):
     nums = []
     for card in cards:
         nums.append(card.number)
+    nums.sort()
+    straight = True
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i-1] + 1:
+            straight = False
+            break
+    if straight:
+        return "Straight"
     nums = dict(Counter(nums).items())
     pairs = 0
     threes = 0
