@@ -1,21 +1,41 @@
 from collections import Counter
+import random
 
 
 class Card():
 
-    def __init__(self, input):
-        number = input[0:-1]
-        if number == "A":
-            self.number = 14
-        elif number == "K":
-            self.number = 13
-        elif number == "Q":
-            self.number = 12
-        elif number == "J":
-            self.number = 11
+    def __init__(self, input=None):
+        if input:
+            number = input[0:-1]
+            if number == "A":
+                self.number = 14
+            elif number == "K":
+                self.number = 13
+            elif number == "Q":
+                self.number = 12
+            elif number == "J":
+                self.number = 11
+            else:
+                self.number = int(number)
+            self.suit = input[-1]
+
+    def __str__(self):
+        if self.number == 14:
+            number = "A"
+        if self.number == 13:
+            number = "K"
+        if self.number == 12:
+            number = "Q"
+        if self.number == 11:
+            number = "J"
         else:
-            self.number = int(number)
-        self.suit = input[-1]
+            number = str(self.number)
+        return number + self.suit
+
+    def random(self):
+        self.number = random.choice(list(range(2, 11)) + ['J', 'Q', 'K', 'A'])
+        self.suit = random.choice(['S', 'H', 'C', 'D'])
+        return self
 
 
 def checkNumbers(cards):
