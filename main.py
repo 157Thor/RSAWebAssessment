@@ -65,25 +65,41 @@ def checkStraight(cards):
     return straight
 
 
-def main():
-    example_hand = "AS, 10C, 10H, 3D, 3S"
-    hand = example_hand.split(", ")
+def evalHand(hand):
+    hand = hand.split(", ")
     cards = []
     for card in hand:
         cards.append(Card(card))
-    for card in cards:
-        print("{} of {}".format(card.number, card.suit))
     flush = checkFlush(cards)
-    if flush:
-        print("Flush")
     straight = checkStraight(cards)
-    if straight:
-        print("Straight")
     nums = checkNumbers(cards)
-    if nums:
-        print(nums)
+    if flush and straight:
+        return "Straight flush"
+    elif nums and "Four" in nums:
+        return nums
+    elif nums and "Full" in nums:
+        return nums
+    elif flush:
+        return "Flush"
+    elif straight:
+        return "Straight"
+    elif nums:
+        return nums
     else:
-        print("No combos")
+        return "No combos"
+
+
+def main():
+    test_hands = [
+        "AS, 10C, 10H, 3D, 3S",
+        "AS, 10C, JH, KD, QS",
+        "AS, 10S, JS, KS, QS",
+        "AS, 10C, 10H, 10D, 10S",
+        "10S, 10C, 10H, 3D, 3S",
+    ]
+    for hand in test_hands:
+        print(hand)
+        print(evalHand(hand))
 
 
 main()
