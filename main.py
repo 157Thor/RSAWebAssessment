@@ -109,7 +109,7 @@ def evalHand(hand):
         return "No combos"
 
 
-def main():
+def demo():
     test_hands = [
         "AS, 10C, 10H, 3D, 3S",
         "AS, 10C, JH, KD, QS",
@@ -120,6 +120,35 @@ def main():
     for hand in test_hands:
         print(hand)
         print(evalHand(hand))
+
+
+def shuffle():
+    cards = []
+    hand = []
+    while len(cards) < 5:
+        card = Card().random()
+        if str(card) not in cards:
+            cards.append(str(card))
+    # for card in cards:
+    #     hand.append(str(card))
+    hand = ", ".join(cards)
+    print(hand)
+    print(evalHand(hand))
+
+
+def main():
+    print("You can run a demo of test hands, shuffle the deck for a random hand, or enter your own hand.")
+    while(True):
+        response = input(
+            "Enter D for demo, S for shuffle, your custom hand of 5 cards, or E to exit:\n").upper()
+        if response == 'D':
+            demo()
+        elif response == 'S':
+            shuffle()
+        elif response == 'E':
+            break
+        else:
+            print(evalHand(response))
 
 
 main()
