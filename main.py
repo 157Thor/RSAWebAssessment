@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 class Card():
 
     def __init__(self, input):
@@ -11,8 +14,34 @@ class Card():
         elif number == "J":
             self.number = 11
         else:
-            self.number = number
+            self.number = int(number)
         self.suit = input[-1]
+
+
+def checkNumbers(cards):
+    nums = []
+    for card in cards:
+        nums.append(card.number)
+    nums = dict(Counter(nums).items())
+    pairs = 0
+    threes = 0
+    for key in nums:
+        if nums[key] == 2:
+            pairs += 1
+        elif nums[key] == 3:
+            threes += 1
+        elif nums[key] == 4:
+            return "Four of a kind"
+        else:
+            pass
+    if pairs == 1 and threes == 1:
+        return "Full house"
+    elif threes == 1:
+        return "Three of a kind"
+    elif pairs > 0:
+        return "{} pair".format(pairs)
+    else:
+        return
 
 
 def main():
@@ -23,6 +52,11 @@ def main():
         cards.append(Card(card))
     for card in cards:
         print("{} of {}".format(card.number, card.suit))
+    nums = checkNumbers(cards)
+    if nums:
+        print(nums)
+    else:
+        print("No combos")
 
 
 main()
